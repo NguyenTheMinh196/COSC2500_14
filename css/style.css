@@ -1,0 +1,59 @@
+body{
+    display: block;
+}
+.body_part{
+    display: grid;
+    grid-template-columns: 25% 75%;
+    height: 80vh;
+}
+.nav_bar{
+    margin: 2vh 5vw;
+    padding: 4px 4vw;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.nav_bar .sections{
+    margin: 0px 2vw;
+    padding: 1px;
+    background: red;
+    text-align: center;
+}
+/* left side */
+.overview{
+    border: 1px solid black;
+    margin:5px 8px 5px 8px;
+    display: flex;
+    flex-direction: column;
+    height: 80vh
+}
+/* left side bottom */
+.overview .current_data{
+    margin: 2vh 1vw;
+    border: 1px solid black;
+    padding: 1px;
+    height: 45%;
+    
+}
+/* left side on top */
+.overview .conclusion{
+    margin: 2vh 1vw;
+    border: 1px solid black;
+    height: 45%;
+}
+/* right side */
+.data{
+    margin: 1vh 1vw;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.data .section{
+    border: 1px solid black;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    height: 30%;
+}
+.improvement_method
