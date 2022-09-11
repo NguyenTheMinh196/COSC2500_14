@@ -218,8 +218,9 @@ if($_GET['water_level'] != '' and  $_GET['humidity'] != '' and $_GET['water'] !=
         <div class = "data" >
             <div class = "section" style = "margin-top: 3vh">
                     <?php
-                     $last_30_days = $sql->query("SELECT * FROM plant_humidity_water_level pl where pdate >= DATEADD(day,-30,GETDATE()) 
-                     and   pdate <= getdate()");
+                     $last_30_days = $sql->query("SELECT * FROM plant_humidity_water_level pl where DATE_SUB(NOW(), INTERVAL 30 DAY)");
+                    // --  'Time' >= DATEADD(day,-30,GETDATE()) 
+                    // --  and 'Time' <= getdate()");
                      $thirty_days_count = $last_30_days->rowCount();
                     //  if your plant has enough humidity
                      $total_humidity = 0;
@@ -231,30 +232,87 @@ if($_GET['water_level'] != '' and  $_GET['humidity'] != '' and $_GET['water'] !=
                         $total_water_level = $total_humidity + $row['water_level'];
                         // for calculation and stuff...
                      }
+                     $average_humidity = $total_humidity / $thirty_days_count;
+                     $average_water_level = $total_water_level / $thirty_days_count;
+                     echo("
+                     <div>
+                     Average humidity in the last 30 days:".$average_humidity." 
+
+                     </div>
+                     <div>
+                     Average water level in the last 30 days:".$average_water_level."
+
+                     </div>
+                     <div>
+                    Total amount of time that the plant was watered: ".$thirty_days_count."
+                     </div>
+                     ")
                     ?>
             </div>
             <div class  = "section">
             <?php
-                     $last_30_days = $sql->query("SELECT * FROM plant_humidity_water_level pl where pdate >= DATEADD(day,-7,GETDATE()) 
-                     and   pdate <= getdate()");
-                     $count = $last_30_days->rowCount();
-                     foreach($display as $row){
-                         echo("<div>");
-                         echo($row['humidity']);
-                         echo("</div>");
+                     $last_7_days = $sql->query("SELECT * FROM plant_humidity_water_level pl where DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                    // --  'Time' >= DATEADD(day,-7,GETDATE()) 
+                    // --  and 'Time' <= getdate()");
+                     $seven_days_count = $last_7_days->rowCount();
+                    //  if your plant has enough humidity
+                     $total_humidity = 0;
+                    //  if you fill your tank enough
+                     $total_water_level = 0; 
+                    //  how many time did the machine water your plant
+                     foreach($last_7_days as $row){
+                        $total_humidity = $total_humidity + $row['humidity'];
+                        $total_water_level = $total_humidity + $row['water_level'];
+                        // for calculation and stuff...
                      }
+                     $average_humidity = $total_humidity / $seven_days_count;
+                     $average_water_level = $total_water_level / $seven_days_count;
+                     echo("
+                     <div>
+                     Average humidity in the last 30 days:".$average_humidity." 
+
+                     </div>
+                     <div>
+                     Average water level in the last 30 days:".$average_water_level."
+
+                     </div>
+                     <div>
+                    Total amount of time that the plant was watered: ".$seven_days_count."
+                     </div>
+                     ")
                     ?>
             </div>
             <div class = "section" style = "margin-bottom: 3vh">
             <?php
-                     $last_30_days = $sql->query("SELECT * FROM plant_humidity_water_level pl where pdate >= DATEADD(day,1,GETDATE()) 
-                     and   pdate <= getdate()");
-                     $count = $last_30_days->rowCount();
-                     foreach($display as $row){
-                         echo("<div>");
-                         echo($row['humidity']);
-                         echo("</div>");
+                     $yesterday = $sql->query("SELECT * FROM plant_humidity_water_level pl where DATE_SUB(NOW(), INTERVAL 1 DAY)");
+                    // --  'Time' >= DATEADD(day,-1,GETDATE()) 
+                    // --  and 'Time' <= getdate()");
+                     $yesterday_count = $yesterday->rowCount();
+                    //  if your plant has enough humidity
+                     $total_humidity = 0;
+                    //  if you fill your tank enough
+                     $total_water_level = 0; 
+                    //  how many time did the machine water your plant
+                     foreach($yesterday as $row){
+                        $total_humidity = $total_humidity + $row['humidity'];
+                        $total_water_level = $total_humidity + $row['water_level'];
+                        // for calculation and stuff...
                      }
+                     $average_humidity = $total_humidity / $yesterday_count;
+                     $average_water_level = $total_water_level / $yesterday_count;
+                     echo("
+                     <div>
+                     Average humidity in the last 30 days:".$average_humidity." 
+
+                     </div>
+                     <div>
+                     Average water level in the last 30 days:".$average_water_level."
+
+                     </div>
+                     <div>
+                    Total amount of time that the plant was watered: ".$yesterday_count."
+                     </div>
+                     ")
                     ?>
             </div>
             <?php
